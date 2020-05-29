@@ -144,7 +144,12 @@ class HashMap:
             key: they key to use to has the entry
             value: the value associated with the entry
         """
-        # FIXME: Write this function
+
+        hash=self._hash_function(key)
+        remain=hash%self.capacity
+        self._buckets[remain].add_front(key,value)
+        print(self._buckets[remain])
+        print(self.capacity)
 
     def remove(self, key):
         """
@@ -179,7 +184,13 @@ class HashMap:
             the ratio of (number of links) / (number of buckets) in the table as a float.
 
         """
-        # FIXME: Write this function
+        links=0
+        buckets=0
+        for i in self._buckets:
+            if i !=[]:
+                links+=i.size
+            buckets+=1
+        return float(links/buckets)
 
     def __str__(self):
         """
@@ -192,3 +203,13 @@ class HashMap:
             out = out + str(index) + ': ' + str(bucket) + '\n'
             index = index + 1
         return out
+
+
+'''m = HashMap(100, hash_function_1)
+print(m.table_load())
+m.put('key1', 10)
+print(m.table_load())
+m.put('key2', 20)
+print(m.table_load())
+m.put('key1', 30)
+print(m.table_load())'''
