@@ -118,6 +118,13 @@ class HashMap:
             self._buckets.append(LinkedList())
         self.size=0
 
+    def get_helper(self,key,node):
+        if node==None:
+            return False
+        elif node.key==key:
+            return node.value
+        else:
+            return self.get_helper(key,node.next)
 
     def get(self, key):
         """
@@ -127,7 +134,11 @@ class HashMap:
         Return:
             The value associated to the key. None if the link isn't found.
         """
-        # FIXME: Write this function
+        hash= self._hash_function(key)
+        remain=hash%self.capacity
+        thebucket=self._buckets[remain]
+        return self.get_helper(key,thebucket.head)
+
 
     def resize_table(self, capacity):
         """
@@ -138,12 +149,10 @@ class HashMap:
         """
         # FIXME: Write this function
     def put_helper(self, key, value, node,remain):
-        if node.next==None:
-            if node.key==key:
-                node.value = value
-            else:
-                self._buckets[remain].add_front(key,value)
-                self.size += 1
+        if node==None:
+
+            self._buckets[remain].add_front(key,value)
+            self.size += 1
 
 
 
@@ -176,8 +185,6 @@ class HashMap:
         else:
 
             return self.put_helper(key,value,self._buckets[remain].head, remain=remain)
-
-        print(self._buckets[remain])
 
 
 
@@ -247,13 +254,13 @@ class HashMap:
             index = index + 1
         return out
 
-'''m = HashMap(10, hash_function_1)
+'''m = HashMap(100, hash_function_1)
 
-m.put("test_val",5)
-m.put("test_val",5)
-m.put("test_-5",-5)
 
-print(m.size)
-'''
+test_values = [("test_5", 5), ("test_-5", -5), ("test_5_", 5), ("diff_word", 15), ("another_word", 20),
+                       ("set", 10), ("anotha_one", -7), ("completely_different", 5), ("getting_there", -1)]
+for key, val in test_values:
+    m.put(key, val)
 
+print(m.get("set"))'''
 
