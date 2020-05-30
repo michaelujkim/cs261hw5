@@ -139,12 +139,18 @@ class HashMap:
         # FIXME: Write this function
     def put_helper(self, key, value, node,remain):
         if node.next==None:
-            self._buckets[remain].add_front(key,value)
-            self.size += 1
+            if node.key==key:
+                node.value = value
+            else:
+                self._buckets[remain].add_front(key,value)
+                self.size += 1
+
+
 
         elif node.key==key:
-            node.value=value
-            print(node)
+            node.value = value
+
+
 
 
         else:
@@ -165,7 +171,8 @@ class HashMap:
         remain=hash%self.capacity
         if self._buckets[remain].head ==None:
             self._buckets[remain].add_front(key,value)
-            self.size=+1
+            self.size+=1
+
         else:
 
             return self.put_helper(key,value,self._buckets[remain].head, remain=remain)
@@ -241,22 +248,12 @@ class HashMap:
         return out
 
 '''m = HashMap(10, hash_function_1)
-print(m.table_load())
-m.put('key1', 10)
-print(m.table_load())
-m.put('key2', 20)
-print(m.table_load())
-m.put('key1', 30)
-first_node = ("test_val", 5)
-collision_node = ("test_5", 5)
-print(m.table_load())
-print(m.contains_key('key1'))
-m.put("test_val", 5)
-m.put("test_5", 5)
 
-print (hash_function_1("test_val")%m.capacity)
-print (hash_function_1("test_5")%m.capacity)'''
-print(hash_function_1("test"))
-print(hash_function_1("tets"))
-print(hash_function_2("test"))
-print(hash_function_2("tets"))
+m.put("test_val",5)
+m.put("test_val",5)
+m.put("test_-5",-5)
+
+print(m.size)
+'''
+
+
