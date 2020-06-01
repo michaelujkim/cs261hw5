@@ -40,9 +40,10 @@ def top_words(source, number):
         A list of tuples of the form (word, count), sorted by most common word. (e.g. [("a", 23), ("the", 20), ("it", 10)])
     """
 
-    keys = set()
+    keys = []
 
-    ht = HashMap(2500,hash_function_2)
+    ht = HashMap(100,hash_function_2)
+    '''def bucket_helper(node)=function()'''
 
     # This block of code will read a file one word as a time and
     # put the word in `w`. It should be left as starter code.
@@ -50,7 +51,23 @@ def top_words(source, number):
         for line in f:
             words = rgx.findall(line)
             for w in words:
-                return [("test",34)]
+                keys.append(w.lower())
 
 
-#print(top_words("alice.txt",10))  # COMMENT THIS OUT WHEN SUBMITTING TO GRADESCOPE
+        for i in set(keys):
+
+            ht.put(i,0)
+
+
+
+
+
+
+
+
+
+
+print(top_words("alice.txt",10))  # COMMENT THIS OUT WHEN SUBMITTING TO GRADESCOPE
+
+print(hash_function_2("character"))
+print(hash_function_2("repeating"))
