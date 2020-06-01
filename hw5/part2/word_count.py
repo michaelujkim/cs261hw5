@@ -59,15 +59,42 @@ def top_words(source, number):
             ht.put(i,0)
 
 
+        for i in keys:
+            value=ht.get(i)
+            value+=1
+            ht.put(i,value)
+
+        sortedList=[]
+        for i in keys:
+            value=ht.get(i)
+
+            sortedList.append([i,value])
 
 
 
+        res=[]
+        for i in sortedList:
+            if i not in res:
+                res.append(i)
+        def Sort(list):
+            list.sort(key=lambda x: x[1], reverse=True)
+            return list
+        Sort(res)
+
+        res=res[:number]
+        final_list=[]
 
 
 
+        for i in res:
 
 
-print(top_words("alice.txt",10))  # COMMENT THIS OUT WHEN SUBMITTING TO GRADESCOPE
+             final_list.append( tuple(i))
+        return final_list
+
+
+
+'''print(top_words("alice.txt",10))  # COMMENT THIS OUT WHEN SUBMITTING TO GRADESCOPE
 
 print(hash_function_2("character"))
-print(hash_function_2("repeating"))
+print(hash_function_2("repeating"))'''
