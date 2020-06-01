@@ -187,7 +187,15 @@ class HashMap:
             return self.put_helper(key,value,self._buckets[remain].head, remain=remain)
 
 
+    def remove_helper(self,key,node,remain):
+        if node==None:
+            return
+        elif node.key==key:
 
+
+            self._buckets[remain].remove(key)
+        else:
+            return self.remove_helper(key,node.next,remain)
     def remove(self, key):
         """
         Removes and frees the link with the given key from the table. If no such link
@@ -196,7 +204,10 @@ class HashMap:
         Args:
             key: they key to search for and remove along with its value
         """
-        # FIXME: Write this function
+        hash = self._hash_function(key)
+        remain = hash % self.capacity
+        thebucket = self._buckets[remain]
+        return self.remove_helper(key, thebucket.head,remain=remain)
 
     def contains_key(self, key):
         """
@@ -254,7 +265,7 @@ class HashMap:
             index = index + 1
         return out
 
-'''m = HashMap(100, hash_function_1)
+'''m = HashMap(10, hash_function_1)
 
 
 test_values = [("test_5", 5), ("test_-5", -5), ("test_5_", 5), ("diff_word", 15), ("another_word", 20),
@@ -262,5 +273,9 @@ test_values = [("test_5", 5), ("test_-5", -5), ("test_5_", 5), ("diff_word", 15)
 for key, val in test_values:
     m.put(key, val)
 
-print(m.get("set"))'''
+m.remove("set")
+m.remove("set")
+
+
+print(m)'''
 
