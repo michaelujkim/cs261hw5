@@ -139,6 +139,12 @@ class HashMap:
         thebucket=self._buckets[remain]
         return self.get_helper(key,thebucket.head)
 
+    def listmaker(self,node,list):
+        if node==None:
+            return
+        else:
+            list.append(node)
+            return self.listmaker(node.next,list)
 
     def resize_table(self, capacity):
         """
@@ -147,7 +153,33 @@ class HashMap:
         Args:
             capacity: the new number of buckets.
         """
-        # FIXME: Write this function
+
+        linklist=[]
+
+
+        for x in self._buckets:
+            if x.head!=None:
+                self.listmaker(x.head,linklist)
+        self._buckets = []
+        self.capacity=capacity
+        for i in range(capacity):
+            self._buckets.append(LinkedList())
+        self.size = 0
+
+        for x in linklist:
+            value=x.value
+            key=x.key
+            hash = self._hash_function(key)
+            remain = hash % self.capacity
+            if self._buckets[remain].head == None:
+                self._buckets[remain].add_front(key, value)
+                self.size += 1
+
+            else:
+
+                self.put_helper(key, value, self._buckets[remain].head, remain=remain)
+
+
     def put_helper(self, key, value, node,remain):
         if node==None:
 
@@ -273,8 +305,7 @@ test_values = [("test_5", 5), ("test_-5", -5), ("test_5_", 5), ("diff_word", 15)
 for key, val in test_values:
     m.put(key, val)
 
-m.remove("set")
-m.remove("set")
+m.resize_table(5)
 
 
 print(m)'''
